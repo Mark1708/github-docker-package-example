@@ -3,18 +3,19 @@
 ![Github](https://img.shields.io/badge/-Github-0a0a0a?style=for-the-badge&logo=Github)
 ![Docker](https://img.shields.io/badge/-Docker-0a0a0a?style=for-the-badge&logo=Docker)
 
-### [Russian version](https://github.com/Mark1708/github-docker-package-example/blob/main/README.ru.md)
+### [English version](https://github.com/Mark1708/github-docker-package-example/blob/main/README.md)
+### [Репозиторий проекта](https://github.com/Mark1708/github-docker-package-example)
 
-The Container registry stores container images within your organization or personal account, and allows you to associate an image with a repository. 
+Реестр контейнеров хранит изображения контейнеров в вашей организации или личной учетной записи и позволяет вам связать изображение с хранилищем.
 
-## Project preparation
+## Подготовка проекта
 
-> I decided to show you how it works using the example of a simple Spring Boot application.
+> Решил показать вам как это работает на примере простого Spring Boot приложения.
 
-### Changing pom.xml
-> It is done solely for convenience. Now the jar of our project will be called the same as artifactId
+### Изменяем pom.xml
+> Делается исключительно для удобства. Теперь jar нашего проекта будет называться также как и artifactId
 
-Adding this line to build
+Добавляем такую строчку в build
 ```xml
 <build>
 	<finalName>${project.artifactId}</finalName>
@@ -22,7 +23,7 @@ Adding this line to build
 </build
 ```
 
-And it is also interesting to install a dependency from Github Maven Registry (you can find out about it [here](https://github.com/Mark 1708/github-maven-package-example))
+А также интересно установить зависимать из Github Maven Registry (об этом можете узнать [тут](https://github.com/Mark1708/github-maven-package-example))
 ```xml
 <dependency>  
     <groupId>example.com</groupId>  
@@ -31,7 +32,7 @@ And it is also interesting to install a dependency from Github Maven Registry (y
 </dependency>
 ```
 
-To install a private package, add it to the root of the repository `settings.xml`
+Для устновки приватного package добавим в корень репозитория `settings.xml`
 ```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"  
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
@@ -71,16 +72,16 @@ To install a private package, add it to the root of the repository `settings.xml
 </settings>
 ```
 
-> Replacing `<GITHUB_USERNAME>`,` <GITHUB_REPO>` and `<GITHUB_ACCESS_TOKEN>` with real data</br>
-> You need an access token with the rights: `publish, install and delete private, internal and public packages`
+> Заменяем <GITHUB_USERNAME>,  <GITHUB_REPO> и <GITHUB_ACCESS_TOKEN></br>
+> Вам нужен токен доступа с правами: `publish, install, and delete private, internal, and public packages`
 
-### Adding Dockerfile
+### Добавляем Dockerfile
 
 ```Dockerfile
 FROM maven:3.6.3-jdk-11 AS builder  
   
 COPY ./ ./  
-# For install private maven dependency  
+# Для установки приватной зависимости
 COPY ./settings.xml /root/.m2/settings.xml  
   
 RUN mvn clean package -DskipTests  
@@ -91,9 +92,9 @@ EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-### Log in to Github Packages Registry
+### Авторизируемся в Github Packages Registry
 
-> You need an access token with the rights: `read:packages, write:packages, delete:packages`
+> Вам нужен токен доступа с правами: `read:packages, write:packages, delete:packages`
 
 ```shell
 export CR_PAT=<YOUR_ACCESS_TOKEN>
@@ -101,25 +102,25 @@ export CR_PAT=<YOUR_ACCESS_TOKEN>
 echo $CR_PAT | docker login ghcr.io -u <GITHUB_USERNAME> --password-stdin
 ```
 
-### Build an image
+### Собираем образ
 
 ```shell
 docker build -t ghcr.io/<GITHUB_USERNAME>/<IMAGE_NAME> -f ./Dockerfile 
 ```
 
-### Assign the tag
+### Присваиваем тэг
 
 ```shell
 docker tag ghcr.io/<GITHUB_USERNAME>/<IMAGE_NAME> ghcr.io/<GITHUB_USERNAME>/<IMAGE_NAME>:v1.0.0
 ```
 
-Push in Github Packages Registry
+### Пушим в Github Packages Registry
 
 ```shell
 docker push ghcr.io/<GITHUB_USERNAME>/<IMAGE_NAME>:v1.0.0
 ```
 
-### Install and run our image from Github Packages Registry
+### Установим и запустим наш образ из Github Packages Registry
 
 ```shell
 docker pull ghcr.io/<GITHUB_USERNAME>/<IMAGE_NAME>:v1.0.0
@@ -129,12 +130,12 @@ docker run -p 8080:8080 ghcr.io/<GITHUB_USERNAME>/<IMAGE_NAME>:v1.0.0
 curl http://localhost:8080/username/qwerty123
 ```
 
-### Good luck !)
+### Удачи !)
 
-## Other Resources
--   [Boilerplates](https://github.com/Mark1708/boilerplates) - Templates for various projects
--   [Cheat-Sheets](https://github.com/Mark1708/cheat-sheets) - Command Reference for various tools and technologies
--   [Habr](https://habr.com/ru/users/Mark1708/posts) - Here I sometimes write about something interesting
+## Другие ресурсы
+-   [Boilerplates](https://github.com/Mark1708/boilerplates) - Шаблоны разных проектов
+-   [Cheat-Sheets](https://github.com/Mark1708/cheat-sheets) - Справочник по различным инструментам и технологиям
+-   [Habr](https://habr.com/ru/users/Mark1708/posts) - Здесь я иногда пишу о чем-то интересном
 
 ## Contact
 Created by [Gurianov Mark](https://mark1708.github.io/) - feel free to contact me!
