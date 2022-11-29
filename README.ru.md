@@ -4,7 +4,6 @@
 ![Docker](https://img.shields.io/badge/-Docker-0a0a0a?style=for-the-badge&logo=Docker)
 
 ### [English version](https://github.com/Mark1708/github-docker-package-example/blob/main/README.md)
-### [Репозиторий проекта](https://github.com/Mark1708/github-docker-package-example)
 
 Реестр контейнеров хранит изображения контейнеров в вашей организации или личной учетной записи и позволяет вам связать изображение с хранилищем.
 
